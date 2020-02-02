@@ -1,1 +1,1 @@
-# Search-Algorithms
+# Maze-Runner

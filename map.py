@@ -1,5 +1,5 @@
 import random as r
-import numpy as np
+
 
 def main():
   inputDim = input("Enter dimension of map: ")
@@ -7,14 +7,19 @@ def main():
   printMap(map)
 
 def printMap(a):
-    for row in range(len(a)):
-        for col in range (len(a[row])):
-            print("{:8.3f}".format(a[row][col]), end = " ")
-        print()
+  print("map:")
+  print('\n'.join(['\t'.join([str(cell) for cell in row]) for row in a]))
+  print()
 
 def generateMap(dim):
   map = [[0 for x in range(dim)] for y in range(dim)]
-  r.choice(map)
+  p = [0,1]
+  for row in range(len(map)):
+    for col in range(len(map)):
+      map[row][col]= r.choice(p)
+
+  map[0][0] = "s"
+  map[dim-1][dim-1] = "x"
   return map
 
 

@@ -8,7 +8,16 @@ def main():
   inputP = input("Enter probability 0<p<1: ")
   map=generateMap(int(inputDim),float(inputP))
   printMap(map)
-  dfs(map)
+  search = input("Choose search option: dfs, bfs, a*, bi-directional bfs \n")
+  if (search == "dfs"):
+    bfs(map)
+  elif (search == "bfs"):
+    dfs(map)
+  elif (search == "a*"):
+    print("")
+  elif (search == "bi-directional bfs"):
+    print("")
+
 
 def printMap(a):
   print("map:")

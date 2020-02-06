@@ -1,4 +1,6 @@
 import random as r
+from searches import bfs
+from searches import dfs
 
 
 def main():
@@ -6,6 +8,7 @@ def main():
   inputP = input("Enter probability 0<p<1: ")
   map=generateMap(int(inputDim),float(inputP))
   printMap(map)
+  dfs(map)
 
 def printMap(a):
   print("map:")

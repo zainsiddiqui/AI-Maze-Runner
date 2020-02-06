@@ -15,7 +15,7 @@ def dfs(map):
         path.append(curr)
         row = curr.x
         column = curr.y   
-        if (row < 0 or row >= len(map) or column < 0 or column >= len(map) or visited[row][column] == 1 or map[row][column] == "1"):
+        if (row < 0 or row >= len(map) or column < 0 or column >= len(map) or visited[row][column] == 1 or map[row][column] == 1):
             path.pop()
             continue
         if (map[row][column] == "G"):
@@ -44,7 +44,7 @@ def bfs(map):
         path.append(curr)
         row = curr.x
         column = curr.y
-        if (row < 0 or row >= len(map) or column < 0 or column >= len(map) or visited[row][column] == 1 or map[row][column] == "1"):
+        if (row < 0 or row >= len(map) or column < 0 or column >= len(map) or visited[row][column] == 1 or map[row][column] == 1):
             path.pop()
             continue
         if (map[row][column] == "G"):
@@ -66,6 +66,6 @@ def bfs(map):
 
 
 
-map = [["S", "0", "0"], ["0","1","0"], ["0","1","G"]]
-dfs(map)
-bfs(map)
+# map = [["S", "0", "0"], ["0","1","0"], ["0","1","G"]]
+# dfs(map)
+# bfs(map)

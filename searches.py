@@ -1,4 +1,4 @@
-# Search Algoritms
+# Search Algorithms
 class Coordinates:
     def __init__(self, x, y):
         self.x = x
@@ -32,6 +32,7 @@ def dfs(map):
             stack.append(Coordinates(row + 1, column))
     print("NO PATH FOUND FOR DFS")
     return
+
 
 def bfs(map):
     visited = [[0 for x in range(len(map))] for y in range(len(map))]

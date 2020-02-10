@@ -88,8 +88,7 @@ def bidirectional_bfs(map):
             
             if (rowS < 0 or rowS >= len(map) or columnS < 0 or columnS >= len(map) or visited[rowS][columnS] == 1 or map[rowS][columnS] == 1):
                 path.pop()
-                #continue
-                
+                #continue   
             elif (map[rowS][columnS] == "G" or check_bi_bfs(currStart, queueG)):
                 visited[rowS][columnS] = 1
                 print("PATH FOUND FOR BI-BFS: ")
@@ -134,7 +133,7 @@ def bidirectional_bfs(map):
 
 
 
-map = [["S", 0, 0], [0,1,0], [0,1,"G"]]
-bidirectional_bfs(map)
+# map = [["S", 0, 0], [0,1,0], [0,1,"G"]]
+# bidirectional_bfs(map)
 # dfs(map)
 # bfs(map)

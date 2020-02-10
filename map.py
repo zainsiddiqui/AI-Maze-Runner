@@ -1,6 +1,7 @@
 import random as r
 from searches import bfs
 from searches import dfs
+from searches import *
 
 
 def main():
@@ -8,15 +9,15 @@ def main():
   inputP = input("Enter probability 0<p<1: ")
   map=generateMap(int(inputDim),float(inputP))
   printMap(map)
-  search = input("Choose search option: dfs, bfs, a*, bi-directional bfs \n")
+  search = input("Choose search option: dfs, bfs, a*, bi-bfs \n")
   if (search == "dfs"):
-    bfs(map)
-  elif (search == "bfs"):
     dfs(map)
+  elif (search == "bfs"):
+    bfs(map)
   elif (search == "a*"):
     print("")
-  elif (search == "bi-directional bfs"):
-    print("")
+  elif (search == "bi-bfs"):
+    bidirectional_bfs(map)
 
 
 def printMap(a):

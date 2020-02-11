@@ -1,7 +1,8 @@
 import random as r
 from searches import bfs
 from searches import dfs
-from searches import *
+from searches import bidirectional_bfs
+from searches import astar
 
 
 def main():
@@ -14,8 +15,20 @@ def main():
     dfs(map)
   elif (search == "bfs"):
     bfs(map)
-  elif (search == "a*"):
-    print("")
+  elif (search == "a*" or search == "a" ):
+    # Setting up map
+    map[0][0]=0
+    map[len(map)-1][len(map)-1] = 0
+
+    flag = input("Enter number: (0) Manhattan (1) Euclidean \n")
+    # 1 for Euclidean
+    # 0 for Manhattan
+    path = astar(map,int(flag))
+    if path is None:
+      print("path does not exist")
+    else:
+      print(path)
+    
   elif (search == "bi-bfs"):
     bidirectional_bfs(map)
 

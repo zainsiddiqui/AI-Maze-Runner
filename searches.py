@@ -171,7 +171,6 @@ class Coordinates:
         self.x = x
         self.y = y
 
-# ASK COWAN IF WE NEED FINAL PATH OR THE PATH THAT THE PROGRAM TAKES
 def dfs(map):
     visited = [[0 for x in range(len(map))] for y in range(len(map))]
     stack = []
@@ -179,26 +178,58 @@ def dfs(map):
     stack.append(Coordinates(0, 0))
     while (len(stack) > 0):
         curr = stack.pop()
-        path.append(curr)
         row = curr.x
-        column = curr.y   
+        column = curr.y
+        
         if (row < 0 or row >= len(map) or column < 0 or column >= len(map) or visited[row][column] == 1 or map[row][column] == 1):
-            path.pop()
             continue
+        
+        path.append(curr)
+        visited[row][column] = 1
         if (map[row][column] == "G"):
             visited[row][column] = 1
             print("PATH FOUND FOR DFS: ")
             for curr in path:
                 print(curr.x, curr.y)
             return
-        else:
-            visited[row][column] = 1
-            stack.append(Coordinates(row, column - 1))
-            stack.append(Coordinates(row, column + 1))
-            stack.append(Coordinates(row - 1, column)) 
-            stack.append(Coordinates(row + 1, column))
+        if (has_neighbors(row, column, map, visited) == False):
+            temp = path
+            for curr in list(reversed(temp)):
+                x = curr.x
+                y = curr.y
+                #print(x, y)
+                #print(has_neighbors(x, y, map, visited))
+                if (has_neighbors(x, y, map, visited) == False):
+                    temp.pop()
+                else:
+                    break
+            path = temp 
+
+        '''
+        if (row < 0 or row >= len(map) or column < 0 or column >= len(map) or visited[row][column] == 1 or map[row][column] == 1):
+            path.pop()
+            continue
+        '''
+
+        stack.append(Coordinates(row, column - 1))
+        stack.append(Coordinates(row, column + 1))
+        stack.append(Coordinates(row - 1, column)) 
+        stack.append(Coordinates(row + 1, column))
     print("NO PATH FOUND FOR DFS")
     return
+
+def has_neighbors(row, column, map, visited):
+    if (row >= 0 and row < len(map) and column - 1 >= 0 and column - 1 < len(map) and visited[row][column - 1] == 0 and (map[row][column - 1] == 0 or map[row][column - 1] == "G") and map[row][column - 1] != "S"):
+        return True
+    elif (row >= 0 and row < len(map) and column + 1 >= 0 and column + 1 < len(map) and visited[row][column + 1] == 0 and (map[row][column + 1] == 0 or map[row][column + 1] == "G") and map[row][column + 1] != "S"):
+        return True
+    elif (row - 1 >= 0 and row - 1 < len(map) and column >= 0 and column < len(map) and visited[row - 1][column] == 0 and (map[row - 1][column] == 0 or map[row - 1][column] == "G") and map[row - 1][column] != "S"):
+        return True
+        
+    elif (row + 1 >= 0 and row + 1 < len(map) and column >= 0 and column < len(map) and visited[row + 1][column] == 0 and (map[row + 1][column] == 0 or map[row + 1][column] == "G") and map[row + 1][column] != "S"):
+        return True
+    else:
+        return False
 
 
 def bfs(map):

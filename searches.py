@@ -1,4 +1,171 @@
-# Search Algorithms
+import heapq
+
+class coordNode():
+    def __init__(self, parent=None, position=None):
+        self.parent = parent
+        self.position = position
+
+        self.g = 0
+        self.h = 0
+        self.f = 0
+
+    def __lt__(self, a):
+        return self.f < a.f
+
+    def __eq__(self, a):
+        if (self.position == a.position):
+            return True
+        else: 
+            return False
+
+    # Hash method for visited set
+    def __hash__(self):              
+        return hash(self.position)
+        
+       
+def calculateEuclidean(current,goal):
+    # Not incorporating sqrt function as computationally expensive
+    return (((current.position[0] - goal.position[0]) ** 2) + ((current.position[1] - goal.position[1]) ** 2))
+
+def calculateManhattan(current,goal):
+    return (abs(current.position[0] - goal.position[0]) + abs(current.position[1] - goal.position[1]))
+
+def astar(map, h):
+    # Create and initialize start node
+    start = (0,0)
+    dim = len(map)-1
+    end = (dim,dim)
+    startNode = coordNode(None, start)
+    startNode.f = 0
+    startNode.g = 0
+    startNode.h = 0
+
+    # Create and initialize end node
+    goalNode = coordNode(None, end)
+    goalNode.f = 0
+    goalNode.g = 0
+    goalNode.h = 0
+
+
+    # Initialize both priority queue and visited list of coord nodes
+    pqueue = []
+    # Initialiaing to set as makes algorithm more efficient
+    visited = set()
+
+
+    # Add the start node to priority queue with priority f
+    heapq.heappush(pqueue, (startNode.f, startNode))
+
+    # Loop until priority queue is empty as you have reached the end
+    while len(pqueue) > 0:
+        # Get the current coordNode
+        (v,current_coordNode) = heapq.heappop(pqueue)
+        # Pushing item back into priority queue
+        heapq.heappush(pqueue,(v,current_coordNode))
+        current_index = 0
+
+        for index, (_,item) in enumerate(pqueue):
+            if item.f < current_coordNode.f:
+                current_coordNode = item
+                current_index = index
+
+      
+        # Pop current off open list, add to closed list
+        pqueue.pop(current_index)
+        visited.add(current_coordNode)
+
+        # Found the goalNode
+        if current_coordNode.position == goalNode.position:
+            path = []
+            current = current_coordNode
+            while current is not None:
+                path.append(current.position)
+                current = current.parent
+            # Return reversed path
+            return path[::-1] 
+
+        # List of children nodes
+        children = []
+
+         # Adjacent cells
+        for new_position in [(0, -1), (0, 1), (-1, 0), (1, 0)]:
+            # Get coordNode position
+            coordNode_position = (current_coordNode.position[0] + new_position[0], current_coordNode.position[1] + new_position[1])
+
+            # Make sure within range
+            if coordNode_position[0] > (len(map) - 1) or coordNode_position[0] < 0 or coordNode_position[1] > (len(map[len(map)-1]) -1) or coordNode_position[1] < 0:
+                continue
+
+            # Make sure valid cells
+            if map[coordNode_position[0]][coordNode_position[1]] != 0:
+                continue
+
+            # Create new coordNode
+            new_coordNode = coordNode(current_coordNode, coordNode_position)
+
+            # Appending to children list
+            children.append(new_coordNode)
+
+        # Loop through children list
+        for child in children:
+            # Child is on the closed list
+            if child in visited:
+                continue
+            
+            # Calculating g value
+            child.g = current_coordNode.g + 1
+
+            # Calculating heuristic h
+            if (h == 1):
+                # Using Euclidean distance for heuristic
+                child.h = calculateEuclidean(child,goalNode)
+            else:
+                 # Using Manhattan distance for heuristic
+                child.h = calculateManhattan(child,goalNode)
+            
+            # Calculating f value from g and h
+            child.f = child.g + child.h
+
+            # Child is already in the priority queue
+            for (_,open_coordNode) in pqueue:
+                if child.position == open_coordNode.position and child.g > open_coordNode.g:
+                    continue
+
+            # Add the child to the priority queue with priority f
+            heapq.heappush(pqueue, (child.f, child))
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class Coordinates:
     def __init__(self, x, y):
         self.x = x
@@ -178,13 +345,13 @@ def bidirectional_bfs(map):
                 queueS.append(Coordinates(rowS + 1, columnS))
         
         if (len(queueG) > 0):
-            currGoal = queueG.pop(0)
-            path.append(currGoal)
-            rowG = currGoal.x
-            columnG = currGoal.y
+            currgoalNode = queueG.pop(0)
+            path.append(currgoalNode)
+            rowG = currgoalNode.x
+            columnG = currgoalNode.y
             if (rowG < 0 or rowG >= len(map) or columnG < 0 or columnG >= len(map) or visited[rowG][columnG] == 1 or map[rowG][columnG] == 1):
                 path.pop()
-            elif (map[rowG][columnG] == "S" or check_bi_bfs(currGoal, queueS)):
+            elif (map[rowG][columnG] == "S" or check_bi_bfs(currgoalNode, queueS)):
                 visited[rowG][columnG] = 1
                 print("PATH FOUND FOR BI-BFS: ")
                 for curr in path:

@@ -171,6 +171,13 @@ class Coordinates:
         self.x = x
         self.y = y
 
+def pathList(path):
+    temp = []
+    for curr in path:
+        temp.append(tuple((curr.x, curr.y)))
+    return temp
+
+
 def dfs(map):
     visited = [[0 for x in range(len(map))] for y in range(len(map))]
     stack = []
@@ -188,28 +195,24 @@ def dfs(map):
         visited[row][column] = 1
         if (map[row][column] == "G"):
             visited[row][column] = 1
-            print("PATH FOUND FOR DFS: ")
+            #print("PATH FOUND FOR DFS: ")
+            '''
             for curr in path:
                 print(curr.x, curr.y)
-            return
+            '''
+            result = pathList(path)
+            print(result)
+            return result
         if (has_neighbors(row, column, map, visited) == False):
             temp = path
             for curr in list(reversed(temp)):
                 x = curr.x
                 y = curr.y
-                #print(x, y)
-                #print(has_neighbors(x, y, map, visited))
                 if (has_neighbors(x, y, map, visited) == False):
                     temp.pop()
                 else:
                     break
             path = temp 
-
-        '''
-        if (row < 0 or row >= len(map) or column < 0 or column >= len(map) or visited[row][column] == 1 or map[row][column] == 1):
-            path.pop()
-            continue
-        '''
 
         stack.append(Coordinates(row, column - 1))
         stack.append(Coordinates(row, column + 1))
@@ -248,15 +251,11 @@ def bfs(map):
         if (map[row][column] == "G"):
             
             visited[row][column] = "G"
-            print("PATH FOUND FOR BFS: ")
-            
-            printBFS(path, children, map)
-            return
-            ''''
-            for curr in path:
-                print(curr.x, curr.y)
-            return
-            '''
+            #print("PATH FOUND FOR BFS: ")
+            result = printBFS(path, children, map)
+            result = pathList(result)
+            print(result)
+            return result
         else:
             visited[row][column] = 1
             #children[Coordinates(row - 1, column)]  = None
@@ -272,11 +271,6 @@ def bfs(map):
             if (checkValid(row + 1, column, visited, map)):
                 queue.append(Coordinates(row + 1, column))
                 children[Coordinates(row + 1, column)] = curr 
-            '''
-            queue.append(Coordinates(row, column + 1))
-            queue.append(Coordinates(row - 1, column)) 
-            queue.append(Coordinates(row + 1, column))
-            '''
     print("NO PATH FOUND FOR BFS")
     return
 
@@ -285,8 +279,8 @@ def printBFS(path, children, map):
     curr = Coordinates(len(map) - 1, len(map) - 1)
     '''
     for key, value in children.items():
-        print(key.x, key.y,' : ', value.x, value.y)
-    '''   
+        print(key.x, key.y,' : ', value.x, value.y) 
+    '''
     while (curr.x != 0 or curr.y != 0):
         final.append(curr)
         for key, value in children.items():
@@ -294,10 +288,23 @@ def printBFS(path, children, map):
                 curr = children[key]
     final.append(Coordinates(0, 0))
     final.reverse()
+    '''
     for element in final:
         print(element.x, element.y)
-    return
+    '''
+    return final
 
+def printBFS2(path, children, map, node, terminator):
+    final = []
+    curr = Coordinates(node.x, node.y)
+    while (curr.x != terminator.x or curr.y != terminator.y):
+        final.append(curr)
+        for key, value in children.items():
+            if (curr.x == key.x and curr.y == key.y):
+                curr = children[key]
+    final.append(Coordinates(terminator.x, terminator.y))
+    final.reverse()
+    return final
 
 
 def checkValid(row, column, visited, map):
@@ -311,6 +318,125 @@ def check_bi_bfs(curr, queue):
             return True
     return False
 
+def check_bi_bfs2(curr, queue):
+    for temp in queue:
+        if (temp.x == curr.x and temp.y == curr.y):
+            return temp
+
+def bi_bfs(map):
+    visited = [[0 for x in range(len(map))] for y in range(len(map))]
+    queueS = []
+    queueG = []
+    pathS = []
+    pathG = []
+    childrenS = {}
+    childrenG = {}
+    queueS.append(Coordinates(0, 0))
+    queueG.append(Coordinates(len(map) - 1, len(map) - 1))
+    while (len(queueS) > 0 and len(queueG) > 0):
+        if (len(queueS) > 0):
+            currStart = queueS.pop(0)
+            pathS.append(currStart)
+            rowS = currStart.x
+            columnS = currStart.y
+            if (rowS < 0 or rowS >= len(map) or columnS < 0 or columnS >= len(map) or visited[rowS][columnS] == 1 or map[rowS][columnS] == 1):
+                continue   
+            if (map[rowS][columnS] == "G"):
+                visited[rowS][columnS] = "G"
+                #print("PATH FOUND FOR BI-BFS4: ")
+                result = printBFS(pathS, childrenS, map)
+                print(result)
+                return result
+            elif (check_bi_bfs(currStart, queueG)):
+                node = check_bi_bfs2(currStart, queueG)
+                final1 = []
+                final1 = printBFS2(pathG, childrenG, map, node, Coordinates(len(map) - 1, len(map) - 1))
+                final2 = printBFS2(pathS, childrenS, map, node, Coordinates(0, 0))
+                final2.reverse()
+                final2 = final2[1:]
+                final = final1 + final2
+                final.reverse()
+                #print("PATH FOUND FOR BI-BFS3: ")
+                '''
+                for curr in final:
+                    print(curr.x, curr.y)
+                '''
+                result = pathList(final)
+                print(result)
+                return result
+
+            else:
+                visited[rowS][columnS] = 1
+                if (checkValid(rowS, columnS - 1, visited, map)):
+                    queueS.append(Coordinates(rowS, columnS - 1))
+                    childrenS[Coordinates(rowS, columnS - 1)] = currStart
+                if (checkValid(rowS, columnS + 1, visited, map)):
+                    queueS.append(Coordinates(rowS, columnS + 1))
+                    childrenS[Coordinates(rowS, columnS + 1)] = currStart
+                if (checkValid(rowS - 1, columnS, visited, map)):
+                    queueS.append(Coordinates(rowS - 1, columnS))
+                    childrenS[Coordinates(rowS - 1, columnS)] = currStart
+                if (checkValid(rowS + 1, columnS, visited, map)):
+                    queueS.append(Coordinates(rowS + 1, columnS))
+                    childrenS[Coordinates(rowS + 1, columnS)] = currStart 
+        
+        if (len(queueG) > 0):
+            currGoal = queueG.pop(0)
+            pathG.append(currGoal)
+            rowG = currGoal.x
+            columnG = currGoal.y
+            if (rowG < 0 or rowG >= len(map) or columnG < 0 or columnG >= len(map) or visited[rowG][columnG] == 1 or map[rowG][columnG] == 1):
+                continue   
+            if (map[rowG][columnG] == "S"):
+                visited[rowG][columnG] = "S"
+                #print("PATH FOUND FOR BI-BFS2: ")
+                result = printBFS(pathG, childrenG, map)
+                result = pathList(result)
+                print(result)
+                return result
+            elif (check_bi_bfs(currGoal, queueS)):
+                node = check_bi_bfs2(currGoal, queueS)
+                final1 = []
+                final1 = printBFS2(pathS, childrenS, map, node, Coordinates(0, 0))
+                final2 = printBFS2(pathG, childrenG, map, node, Coordinates(len(map) - 1, len(map) - 1))
+                final2.reverse()
+                final2 = final2[1:]
+                final = final1 + final2
+                #print("PATH FOUND FOR BI-BFS1: ")
+                '''
+                for curr1, curr2 in zip(final1, final2):
+                    print(curr1.x, curr1.y)
+                    print(curr2.x, curr2.y)
+                '''
+                result = pathList(final)
+                '''
+                for curr in final:
+                    print(curr.x, curr.y)
+                '''
+                print(result)
+                return result
+            else:
+                visited[rowG][columnG] = 1
+                if (checkValid(rowG, columnG - 1, visited, map)):
+                    queueG.append(Coordinates(rowG, columnG - 1))
+                    childrenG[Coordinates(rowG, columnG - 1)] = currGoal
+                if (checkValid(rowG, columnG + 1, visited, map)):
+                    queueG.append(Coordinates(rowG, columnG + 1))
+                    childrenG[Coordinates(rowG, columnG + 1)] = currGoal
+                if (checkValid(rowG - 1, columnG, visited, map)):
+                    queueG.append(Coordinates(rowG - 1, columnG))
+                    childrenG[Coordinates(rowG - 1, columnG)] = currGoal
+                if (checkValid(rowG + 1, columnG, visited, map)):
+                    queueG.append(Coordinates(rowG + 1, columnG))
+                    childrenG[Coordinates(rowG + 1, columnG)] = currGoal 
+    print("NO PATH FOUND FOR BI-BFS")
+    return
+
+
+
+
+
+'''
 def bidirectional_bfs(map):
     visited = [[0 for x in range(len(map))] for y in range(len(map))]
     queueS = []
@@ -327,10 +453,8 @@ def bidirectional_bfs(map):
             path.append(currStart)
             rowS = currStart.x
             columnS = currStart.y
-            
             if (rowS < 0 or rowS >= len(map) or columnS < 0 or columnS >= len(map) or visited[rowS][columnS] == 1 or map[rowS][columnS] == 1):
-                path.pop()
-                #continue   
+                continue   
             elif (map[rowS][columnS] == "G" or check_bi_bfs(currStart, queueG)):
                 visited[rowS][columnS] = 1
                 print("PATH FOUND FOR BI-BFS: ")
@@ -345,7 +469,7 @@ def bidirectional_bfs(map):
                 queueS.append(Coordinates(rowS + 1, columnS))
         
         if (len(queueG) > 0):
-            currgoalNode = queueG.pop(0)
+            currGoal = queueG.pop(0)
             path.append(currgoalNode)
             rowG = currgoalNode.x
             columnG = currgoalNode.y
@@ -367,19 +491,11 @@ def bidirectional_bfs(map):
     return
 
 
+map = [["S", 0, 0], [0,1,0], [0,1,"G"]]
+bi_bfs(map)
+bfs(map)
+dfs(map)]
 
-
-
-
-
-
-
-
-#map = [["S", 0, 0], [0,1,0], [0,1,"G"]]
-# bidirectional_bfs(map)
-#bfs(map)
-#dfs(map)]
-'''
 S 0 0
 0 1 0
 0 1 0

@@ -67,6 +67,7 @@ def has_neighbors(row, column, map, visited):
 
 def bfs(map):
     visited = [[0 for x in range(len(map))] for y in range(len(map))]
+    children = {}
     queue = []
     path = []
     queue.append(Coordinates(0, 0))
@@ -76,23 +77,66 @@ def bfs(map):
         row = curr.x
         column = curr.y
         if (row < 0 or row >= len(map) or column < 0 or column >= len(map) or visited[row][column] == 1 or map[row][column] == 1):
-            path.pop()
             continue
         if (map[row][column] == "G"):
-            visited[row][column] = 1
+            
+            visited[row][column] = "G"
             print("PATH FOUND FOR BFS: ")
+            
+            printBFS(path, children, map)
+            return
+            ''''
             for curr in path:
                 print(curr.x, curr.y)
             return
+            '''
         else:
             visited[row][column] = 1
-            queue.append(Coordinates(row, column - 1))
+            #children[Coordinates(row - 1, column)]  = None
+            if (checkValid(row, column - 1, visited, map)):
+                queue.append(Coordinates(row, column - 1))
+                children[Coordinates(row, column - 1)] = curr
+            if (checkValid(row, column + 1, visited, map)):
+                queue.append(Coordinates(row, column + 1))
+                children[Coordinates(row, column + 1)] = curr
+            if (checkValid(row - 1, column, visited, map)):
+                queue.append(Coordinates(row - 1, column))
+                children[Coordinates(row - 1, column)] = curr
+            if (checkValid(row + 1, column, visited, map)):
+                queue.append(Coordinates(row + 1, column))
+                children[Coordinates(row + 1, column)] = curr 
+            '''
             queue.append(Coordinates(row, column + 1))
             queue.append(Coordinates(row - 1, column)) 
             queue.append(Coordinates(row + 1, column))
+            '''
     print("NO PATH FOUND FOR BFS")
     return
 
+def printBFS(path, children, map):
+    final = []
+    curr = Coordinates(len(map) - 1, len(map) - 1)
+    '''
+    for key, value in children.items():
+        print(key.x, key.y,' : ', value.x, value.y)
+    '''   
+    while (curr.x != 0 or curr.y != 0):
+        final.append(curr)
+        for key, value in children.items():
+            if (curr.x == key.x and curr.y == key.y):
+                curr = children[key]
+    final.append(Coordinates(0, 0))
+    final.reverse()
+    for element in final:
+        print(element.x, element.y)
+    return
+
+
+
+def checkValid(row, column, visited, map):
+    if (row < 0 or row >= len(map) or column < 0 or column >= len(map) or visited[row][column] == 1 or map[row][column] == 1):
+        return False
+    return True
 
 def check_bi_bfs(curr, queue):
     for temp in queue:
@@ -164,7 +208,12 @@ def bidirectional_bfs(map):
 
 
 
-# map = [["S", 0, 0], [0,1,0], [0,1,"G"]]
+#map = [["S", 0, 0], [0,1,0], [0,1,"G"]]
 # bidirectional_bfs(map)
-# dfs(map)
-# bfs(map)
+#bfs(map)
+#dfs(map)]
+'''
+S 0 0
+0 1 0
+0 1 0
+'''

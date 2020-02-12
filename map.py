@@ -14,6 +14,7 @@ def main():
     dfs(map)
   elif (search == "bfs"):
     bfs(map)
+    dfs(map)
   elif (search == "a*"):
     print("")
   elif (search == "bi-bfs"):

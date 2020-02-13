@@ -28,7 +28,14 @@ def main():
     # 1 for Euclidean
     # 0 for Manhattan
     start_time = time.time()
-    path = astar(map,int(flag))
+    time.time()
+    signal.signal(signal.SIGALRM, handler)
+    signal.alarm(1)
+    try:
+      path = astar(map,int(flag))
+    except IOError:
+      path = None
+
     if path is None:
       print("path does not exist")
     else:
@@ -37,16 +44,7 @@ def main():
     
   elif (search == "bi-bfs"):
     bi_bfs(map)
-  '''
-  else:
-    print("DFS:")
-    dfs(map)
-    print("BFS:")
-    bfs(map)
-    print("BI-BFS:")
-    bi_bfs(map)
-  '''
-
+ 
 
 
 def printMap(a):

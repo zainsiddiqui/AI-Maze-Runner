@@ -1,7 +1,7 @@
 import random as r
 from searches import bfs
 from searches import dfs
-from searches import bidirectional_bfs
+from searches import bi_bfs
 from searches import astar
 import time
 
@@ -34,7 +34,17 @@ def main():
     print("--- %s seconds ---" % (time.time() - start_time)) 
     
   elif (search == "bi-bfs"):
-    bidirectional_bfs(map)
+    bi_bfs(map)
+  '''
+  else:
+    print("DFS:")
+    dfs(map)
+    print("BFS:")
+    bfs(map)
+    print("BI-BFS:")
+    bi_bfs(map)
+  '''
+
 
 
 def printMap(a):

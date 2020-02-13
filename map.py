@@ -4,6 +4,8 @@ from searches import dfs
 from searches import bi_bfs
 from searches import astar
 import time
+import signal
+ 
 
 
 def main(): 
@@ -64,7 +66,7 @@ def generateMap(dim,p):
   map[dim-1][dim-1] = "G"
   return map
 
-
+# Calculates solvability
 def calculateSolvability():
  
   i = 10
@@ -73,7 +75,7 @@ def calculateSolvability():
   unsolvable = 0
   while (i > 0):
     map = None
-    map = generateMap(int(10),0.9)
+    map = generateMap(int(10),0)
     printMap(map)
     map[0][0] = 0
     map[9][9] = 0
@@ -87,6 +89,49 @@ def calculateSolvability():
 
   print("Generated: "+ str(i2) +" and # Solvable: " + str(solvable))
   print("Success Percent: "+ str((solvable/i2)*100))
+
+def handler(signum, frame):
+    raise IOError("Timeout")
+ 
+def slow_function():
+    time.sleep(30)
+ 
+# Calculates average shortest path length
+def calculateAvgPathLength():
+ 
+  i = 100
+  i2 = i
+  solvable = 0
+  unsolvable = 0
+  pathLen = []
+  while (i > 0):
+    map = None
+    map = generateMap(int(100),0.3)
+    printMap(map)
+    map[0][0] = 0
+    map[99][99] = 0
+    time.time()
+    signal.signal(signal.SIGALRM, handler)
+    signal.alarm(1)
+ 
+    try:
+      path = astar(map,int(1))
+    except IOError:
+      time.time()
+      unsolvable = unsolvable + 1
+      continue
+   
+    print(path)
+    if path is None:
+     unsolvable = unsolvable + 1
+    else:
+      pathLen.append(len(path))
+      solvable = solvable + 1
+    i=i-1
+
+  print("Generated: "+ str(i2) +"maps and # solvable: " + str(solvable))
+  print(pathLen)
+  print("Avg Path Length: "+ str(sum(pathLen)/len(pathLen)))
 
 
 main()

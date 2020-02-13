@@ -131,5 +131,34 @@ def calculateAvgPathLength():
   print(pathLen)
   print("Avg Path Length: "+ str(sum(pathLen)/len(pathLen)))
 
+def compareHeuristics():
+  timeList = []
+  while (len(timeList) < 10):
+    time.time()
+    signal.signal(signal.SIGALRM, handler)
+    signal.alarm(1)
+    map = None
+    map = generateMap(int(100),0.15)
+ # Setting up map
+    map[0][0]=0
+    map[len(map)-1][len(map)-1] = 0
+    start_time = time.time()
+    time.time()
+    signal.signal(signal.SIGALRM, handler)
+    signal.alarm(1)
+    try:
+      path = astar(map,1)
+    except IOError:
+      path = None
+
+    if path is None:
+      print("path does not exist")
+    else:
+      print(path)
+      print("--- %s seconds ---" % (time.time() - start_time)) 
+      timeList.append((time.time() - start_time))
+    
+  print(timeList)
+  print("Avg time: "+str(sum(timeList)/len(timeList)))
 
 main()

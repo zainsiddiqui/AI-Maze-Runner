@@ -1,5 +1,5 @@
 import heapq
-
+import math
 class coordNode():
     def __init__(self, parent=None, position=None):
         self.parent = parent
@@ -25,7 +25,7 @@ class coordNode():
        
 def calculateEuclidean(current,goal):
     # Not incorporating sqrt function as computationally expensive
-    return (((current.position[0] - goal.position[0]) ** 2) + ((current.position[1] - goal.position[1]) ** 2))
+    return (math.sqrt((current.position[0] - goal.position[0]) ** 2) + math.sqrt((current.position[1] - goal.position[1]) ** 2))
 
 def calculateManhattan(current,goal):
     return (abs(current.position[0] - goal.position[0]) + abs(current.position[1] - goal.position[1]))

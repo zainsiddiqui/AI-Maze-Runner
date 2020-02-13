@@ -2,7 +2,7 @@ import random as r
 from searches import bfs
 from searches import dfs
 from searches import bi_bfs
-from searches import astar
+from searches import astar,astare,astarm
 import time
 import signal
  
@@ -34,9 +34,10 @@ def main():
     start_time = time.time()
     time.time()
     signal.signal(signal.SIGALRM, handler)
-    signal.alarm(1)
+    signal.alarm(25)
     try:
-      path = astar(map,int(flag))
+      ##path = astar(map,int(flag))
+      path = astare(map,(0,0),(len(map)-1,len(map)-1))
     except IOError:
       path = None
 
@@ -53,12 +54,12 @@ def main():
   elif (search == "all"):
     start_time = time.time()
     path = dfs(map)
-    print(path)
+    ##print(path)
     print("dfs path length: "+ str(len(path)))
     print("--- dfs took %s seconds ---" % (time.time() - start_time)) 
     start_time = time.time()
     path = bfs(map)
-    print(path)
+    ##print(path)
     print("bfs path length: "+ str(len(path)))
     print("--- bfs took %s seconds ---" % (time.time() - start_time)) 
     # Setting up map
@@ -67,16 +68,16 @@ def main():
     start_time = time.time()
     time.time()
     signal.signal(signal.SIGALRM, handler)
-    signal.alarm(1)
+    signal.alarm(3)
     try:
-      path = astar(map,0)
+      path = astarm(map,(0,0),(len(map)-1,len(map)-1))
     except IOError:
       path = None
 
     if path is None:
       print("NO PATH FOUND FOR A* MANHATTAN")
     else:
-      print(path)
+      ##print(path)
       print("a* manhatttan path length: "+ str(len(path)))
     print("--- a* manhatttan took %s seconds ---" % (time.time() - start_time)) 
     # Setting up map
@@ -85,23 +86,24 @@ def main():
     start_time = time.time()
     time.time()
     signal.signal(signal.SIGALRM, handler)
-    signal.alarm(1)
+    signal.alarm(3)
     try:
-      path = astar(map,0)
+      path = astare(map,(0,0),(len(map)-1,len(map)-1))
     except IOError:
       path = None
 
     if path is None:
       print("NO PATH FOUND FOR A* EUCLIDEAN")
     else:
-      print(path)
+      ##print(path)
       print("a* euclidean path length: "+ str(len(path)))
     print("--- a* euclidean took %s seconds ---" % (time.time() - start_time)) 
     start_time = time.time()
     path = bi_bfs(map)
-    print(path)
-    print("--- bi-bfs took %s seconds ---" % (time.time() - start_time))
+    ##print(path)
     print("bi-bfs path length: "+ str(len(path)))
+    print("--- bi-bfs took %s seconds ---" % (time.time() - start_time))
+   
     
 
 

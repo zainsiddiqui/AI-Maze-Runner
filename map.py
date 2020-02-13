@@ -13,11 +13,15 @@ def main():
   inputP = input("Enter probability 0<p<1: ")
   map=generateMap(int(inputDim),float(inputP))
   printMap(map)
-  search = input("Choose search option: dfs, bfs, a*, bi-bfs \n")
+  search = input("Choose search option: dfs, bfs, a*, bi-bfs or all \n")
   if (search == "dfs"):
+    start_time = time.time()
     dfs(map)
+    print("--- %s seconds ---" % (time.time() - start_time)) 
   elif (search == "bfs"):
+    start_time = time.time()
     bfs(map)
+    print("--- %s seconds ---" % (time.time() - start_time)) 
   elif (search == "a*" or search == "a" ):
     
     # Setting up map
@@ -43,8 +47,63 @@ def main():
     print("--- %s seconds ---" % (time.time() - start_time)) 
     
   elif (search == "bi-bfs"):
+    start_time = time.time()
     bi_bfs(map)
- 
+    print("--- %s seconds ---" % (time.time() - start_time))
+  elif (search == "all"):
+    start_time = time.time()
+    path = dfs(map)
+    print(path)
+    print("dfs path length: "+ str(len(path)))
+    print("--- dfs took %s seconds ---" % (time.time() - start_time)) 
+    start_time = time.time()
+    path = bfs(map)
+    print(path)
+    print("bfs path length: "+ str(len(path)))
+    print("--- bfs took %s seconds ---" % (time.time() - start_time)) 
+    # Setting up map
+    map[0][0]=0
+    map[len(map)-1][len(map)-1] = 0
+    start_time = time.time()
+    time.time()
+    signal.signal(signal.SIGALRM, handler)
+    signal.alarm(1)
+    try:
+      path = astar(map,0)
+    except IOError:
+      path = None
+
+    if path is None:
+      print("NO PATH FOUND FOR A* MANHATTAN")
+    else:
+      print(path)
+      print("a* manhatttan path length: "+ str(len(path)))
+    print("--- a* manhatttan took %s seconds ---" % (time.time() - start_time)) 
+    # Setting up map
+    map[0][0]=0
+    map[len(map)-1][len(map)-1] = 0
+    start_time = time.time()
+    time.time()
+    signal.signal(signal.SIGALRM, handler)
+    signal.alarm(1)
+    try:
+      path = astar(map,0)
+    except IOError:
+      path = None
+
+    if path is None:
+      print("NO PATH FOUND FOR A* EUCLIDEAN")
+    else:
+      print(path)
+      print("a* euclidean path length: "+ str(len(path)))
+    print("--- a* euclidean took %s seconds ---" % (time.time() - start_time)) 
+    start_time = time.time()
+    path = bi_bfs(map)
+    print(path)
+    print("--- bi-bfs took %s seconds ---" % (time.time() - start_time))
+    print("bi-bfs path length: "+ str(len(path)))
+    
+
 
 
 def printMap(a):

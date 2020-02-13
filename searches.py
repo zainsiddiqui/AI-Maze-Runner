@@ -81,6 +81,7 @@ def astar(map, h):
             while current is not None:
                 path.append(current.position)
                 current = current.parent
+            ##print(len(pqueue))
             # Return reversed path
             return path[::-1] 
 
@@ -133,6 +134,7 @@ def astar(map, h):
 
             # Add the child to the priority queue with priority f
             heapq.heappush(pqueue, (child.f, child))
+            
 
 
 

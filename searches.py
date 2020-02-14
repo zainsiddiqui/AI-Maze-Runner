@@ -25,7 +25,7 @@ class coordNode():
        
 def calculateEuclidean(current,goal):
     # Not incorporating sqrt function as computationally expensive
-    return (math.sqrt((current.position[0] - goal.position[0]) ** 2) + math.sqrt((current.position[1] - goal.position[1]) ** 2))
+    return ((current.position[0] - goal.position[0]) ** 2) + ((current.position[1] - goal.position[1]) ** 2)
 
 def calculateManhattan(current,goal):
     return (abs(current.position[0] - goal.position[0]) + abs(current.position[1] - goal.position[1]))
@@ -135,6 +135,7 @@ def astar(map, h):
             # Add the child to the priority queue with priority f
             heapq.heappush(pqueue, (child.f, child))
             
+            
 
 
 
@@ -203,7 +204,11 @@ def dfs(map):
                 print(curr.x, curr.y)
             '''
             result = pathList(path)
+<<<<<<< HEAD
             #print(result)
+=======
+            ##print(result)
+>>>>>>> fa56e81050cea9076f51d1023382074586101a92
             return result
         if (has_neighbors(row, column, map, visited) == False):
             temp = path
@@ -256,7 +261,11 @@ def bfs(map):
             #print("PATH FOUND FOR BFS: ")
             result = printBFS(path, children, map)
             result = pathList(result)
+<<<<<<< HEAD
             #print(result)
+=======
+            ##print(result)
+>>>>>>> fa56e81050cea9076f51d1023382074586101a92
             return result
         else:
             visited[row][column] = 1
@@ -347,7 +356,11 @@ def bi_bfs(map):
                 visited[rowS][columnS] = "G"
                 #print("PATH FOUND FOR BI-BFS4: ")
                 result = printBFS(pathS, childrenS, map)
+<<<<<<< HEAD
                 #print(result)
+=======
+                ##print(result)
+>>>>>>> fa56e81050cea9076f51d1023382074586101a92
                 return result
             elif (check_bi_bfs(currStart, queueG)):
                 node = check_bi_bfs2(currStart, queueG)
@@ -502,3 +515,6 @@ S 0 0
 0 1 0
 0 1 0
 '''
+
+
+

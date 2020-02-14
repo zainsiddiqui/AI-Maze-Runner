@@ -49,9 +49,10 @@ def main():
     start_time = time.time()
     time.time()
     signal.signal(signal.SIGALRM, handler)
-    signal.alarm(1)
+    signal.alarm(25)
     try:
-      path = astar(map,int(flag))
+      ##path = astar(map,int(flag))
+      path = astar(map,flag)
     except IOError:
       path = None
 
@@ -75,12 +76,12 @@ def main():
   elif (search == "all"):
     start_time = time.time()
     path = dfs(map)
-    print(path)
+    ##print(path)
     print("dfs path length: "+ str(len(path)))
     print("--- dfs took %s seconds ---" % (time.time() - start_time)) 
     start_time = time.time()
     path = bfs(map)
-    print(path)
+    ##print(path)
     print("bfs path length: "+ str(len(path)))
     print("--- bfs took %s seconds ---" % (time.time() - start_time)) 
     # Setting up map
@@ -89,7 +90,7 @@ def main():
     start_time = time.time()
     time.time()
     signal.signal(signal.SIGALRM, handler)
-    signal.alarm(1)
+    signal.alarm(3)
     try:
       path = astar(map,0)
     except IOError:
@@ -98,7 +99,7 @@ def main():
     if path is None:
       print("NO PATH FOUND FOR A* MANHATTAN")
     else:
-      print(path)
+      ##print(path)
       print("a* manhatttan path length: "+ str(len(path)))
     print("--- a* manhatttan took %s seconds ---" % (time.time() - start_time)) 
     # Setting up map
@@ -107,23 +108,23 @@ def main():
     start_time = time.time()
     time.time()
     signal.signal(signal.SIGALRM, handler)
-    signal.alarm(1)
+    signal.alarm(3)
     try:
-      path = astar(map,0)
+      path = astar(map,1)
     except IOError:
       path = None
 
     if path is None:
       print("NO PATH FOUND FOR A* EUCLIDEAN")
     else:
-      print(path)
+      $$print(path)
       print("a* euclidean path length: "+ str(len(path)))
     print("--- a* euclidean took %s seconds ---" % (time.time() - start_time)) 
     start_time = time.time()
     path = bi_bfs(map)
-    print(path)
-    print("--- bi-bfs took %s seconds ---" % (time.time() - start_time))
+    ##print(path)
     print("bi-bfs path length: "+ str(len(path)))
+<<<<<<< HEAD
   elif (search == "visuals"):
     temp = copy.deepcopy(map)
     temp[0][0]=0
@@ -169,6 +170,10 @@ def main():
 
 
   plt.show()
+=======
+    print("--- bi-bfs took %s seconds ---" % (time.time() - start_time))
+   
+>>>>>>> fa56e81050cea9076f51d1023382074586101a92
     
 def mazeVisual(map):
   temp = copy.deepcopy(map)

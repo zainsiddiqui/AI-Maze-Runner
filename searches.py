@@ -204,7 +204,11 @@ def dfs(map):
                 print(curr.x, curr.y)
             '''
             result = pathList(path)
+<<<<<<< HEAD
+            #print(result)
+=======
             ##print(result)
+>>>>>>> fa56e81050cea9076f51d1023382074586101a92
             return result
         if (has_neighbors(row, column, map, visited) == False):
             temp = path
@@ -221,7 +225,7 @@ def dfs(map):
         stack.append(Coordinates(row, column + 1))
         stack.append(Coordinates(row - 1, column)) 
         stack.append(Coordinates(row + 1, column))
-    print("NO PATH FOUND FOR DFS")
+    #print("NO PATH FOUND FOR DFS")
     return
 
 def has_neighbors(row, column, map, visited):
@@ -257,7 +261,11 @@ def bfs(map):
             #print("PATH FOUND FOR BFS: ")
             result = printBFS(path, children, map)
             result = pathList(result)
+<<<<<<< HEAD
+            #print(result)
+=======
             ##print(result)
+>>>>>>> fa56e81050cea9076f51d1023382074586101a92
             return result
         else:
             visited[row][column] = 1
@@ -274,7 +282,7 @@ def bfs(map):
             if (checkValid(row + 1, column, visited, map)):
                 queue.append(Coordinates(row + 1, column))
                 children[Coordinates(row + 1, column)] = curr 
-    print("NO PATH FOUND FOR BFS")
+    #print("NO PATH FOUND FOR BFS")
     return
 
 def printBFS(path, children, map):
@@ -348,7 +356,11 @@ def bi_bfs(map):
                 visited[rowS][columnS] = "G"
                 #print("PATH FOUND FOR BI-BFS4: ")
                 result = printBFS(pathS, childrenS, map)
+<<<<<<< HEAD
+                #print(result)
+=======
                 ##print(result)
+>>>>>>> fa56e81050cea9076f51d1023382074586101a92
                 return result
             elif (check_bi_bfs(currStart, queueG)):
                 node = check_bi_bfs2(currStart, queueG)
@@ -432,7 +444,7 @@ def bi_bfs(map):
                 if (checkValid(rowG + 1, columnG, visited, map)):
                     queueG.append(Coordinates(rowG + 1, columnG))
                     childrenG[Coordinates(rowG + 1, columnG)] = currGoal 
-    print("NO PATH FOUND FOR BI-BFS")
+    #print("NO PATH FOUND FOR BI-BFS")
     return
 
 

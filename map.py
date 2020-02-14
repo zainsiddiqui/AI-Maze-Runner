@@ -5,23 +5,38 @@ from searches import bi_bfs
 from searches import astar
 import time
 import signal
- 
+import numpy as np
+import matplotlib.pyplot as plt
+import copy
 
 
 def main(): 
   inputDim = input("Enter dimension of map: ")
   inputP = input("Enter probability 0<p<1: ")
   map=generateMap(int(inputDim),float(inputP))
-  printMap(map)
-  search = input("Choose search option: dfs, bfs, a*, bi-bfs or all \n")
+  #printMap(map)
+  mazeVisual(map)
+  #printMap(map)
+  count = 2
+  search = input("Choose search option: visuals, dfs, bfs, a*, bi-bfs, all \n")
   if (search == "dfs"):
     start_time = time.time()
-    dfs(map)
-    print("--- %s seconds ---" % (time.time() - start_time)) 
+    result = dfs(map)
+    print("--- %s seconds ---" % (time.time() - start_time))
+    if (result == None):
+      print("NO DFS PATH FOUND")
+    visual(map, result, "DFS", count)
+   
+
   elif (search == "bfs"):
     start_time = time.time()
-    bfs(map)
-    print("--- %s seconds ---" % (time.time() - start_time)) 
+    result = bfs(map)
+    print("--- %s seconds ---" % (time.time() - start_time))
+    if (result == None):
+      print("NO BFS PATH FOUND")
+      return
+
+    visual(map, result, "BFS", count) 
   elif (search == "a*" or search == "a" ):
     
     # Setting up map
@@ -42,15 +57,22 @@ def main():
       path = None
 
     if path is None:
-      print("path does not exist")
-    else:
-      print(path)
+      print("A* path does not exist")
+      return
+    #else:
+      #print(path)
     print("--- %s seconds ---" % (time.time() - start_time)) 
+    result = path
+    visual(map, result, "A*", count)
     
   elif (search == "bi-bfs"):
     start_time = time.time()
-    bi_bfs(map)
+    result = bi_bfs(map)
     print("--- %s seconds ---" % (time.time() - start_time))
+    if (result == None):
+      print("NO BI-BFS PATH FOUND")
+      #return
+    visual(map, result, "BI-DIRECTIONAL BFS", count)
   elif (search == "all"):
     start_time = time.time()
     path = dfs(map)
@@ -102,11 +124,101 @@ def main():
     path = bi_bfs(map)
     ##print(path)
     print("bi-bfs path length: "+ str(len(path)))
+<<<<<<< HEAD
+  elif (search == "visuals"):
+    temp = copy.deepcopy(map)
+    temp[0][0]=0
+    temp[len(map)-1][len(map)-1] = 0
+    result1 = dfs(map)
+    result2 = bfs(map)
+    result3 = bi_bfs(map)
+    result4 = astar(temp, 0)
+    result5 = astar(temp, 1)
+
+    if (result1 == None):
+      print("NO DFS PATH FOUND")
+    else:
+      visual(map, result1, "DFS", count)
+      count = count + 1
+
+    if (result2 == None):
+      print("NO BFS PATH FOUND")
+    else:
+      visual(map, result2, "BFS", count)
+      count = count + 1
+
+    if (result3 == None):
+      print("NO BI-BFS PATH FOUND")  
+    else:
+      visual(map, result3, "BI-BFS", count)
+      count = count + 1 
+
+    if (result4 == None):
+      print("NO A* EUCLIDEAN PATH FOUND")
+    else:
+      visual(temp, result4, "A* EUCLIDEAN", count)
+      count = count + 1
+
+    if (result5 == None):
+      print("NO A* MANHATTAN PATH FOUND")
+    else:
+      visual(temp, result5, "A* MANHATTAN", count)
+      count = count + 1
+
+   
+
+
+
+  plt.show()
+=======
     print("--- bi-bfs took %s seconds ---" % (time.time() - start_time))
    
+>>>>>>> fa56e81050cea9076f51d1023382074586101a92
     
+def mazeVisual(map):
+  temp = copy.deepcopy(map)
+  for x in range(len(map)):
+    for y in range(len(map)):
+      if temp[x][y] == 0:
+        temp[x][y] = 4
+      elif temp[x][y] == 1:
+        temp[x][y] = 0
+  temp[0][0] = 3
+  temp[len(temp) - 1][len(temp) - 1] = 3
+  M = np.array(temp)
+  plt.figure(1)
+  plt.imshow(M, cmap=plt.gray())
+  plt.plot()
+  plt.title("MAZE")
+  plt.xlabel('Column (MAZE)')
+  plt.ylabel('Row (MAZE)')
 
+def visual(map, result, strr, count):
 
+  temp = copy.deepcopy(map)
+
+  for x in range(len(map)):
+    for y in range(len(map)):
+      if temp[x][y] == 0:
+        temp[x][y] = 4
+      elif temp[x][y] == 1:
+        temp[x][y] = 0
+
+  for (x, y) in result:
+    temp[x][y] = 3
+  
+  M = np.array(temp)
+  plt.figure(count)
+  plt.imshow(M, cmap=plt.gray())
+  plt.plot()
+  plt.title(strr)
+  plt.xlabel('Column')
+  plt.ylabel('Row')
+  #plt.pause(0.1)
+  '''
+  for x in range(len(map)):
+    for y in range(len(map)):
+  '''
 
 def printMap(a):
   print("map:")

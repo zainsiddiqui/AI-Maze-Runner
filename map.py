@@ -2,7 +2,7 @@ import random as r
 from searches import bfs
 from searches import dfs
 from searches import bi_bfs
-from searches import astar,astare,astarm
+from searches import astar
 import time
 import signal
  
@@ -37,7 +37,7 @@ def main():
     signal.alarm(25)
     try:
       ##path = astar(map,int(flag))
-      path = astare(map,(0,0),(len(map)-1,len(map)-1))
+      path = astar(map,flag)
     except IOError:
       path = None
 
@@ -70,7 +70,7 @@ def main():
     signal.signal(signal.SIGALRM, handler)
     signal.alarm(3)
     try:
-      path = astarm(map,(0,0),(len(map)-1,len(map)-1))
+      path = astar(map,0)
     except IOError:
       path = None
 
@@ -88,14 +88,14 @@ def main():
     signal.signal(signal.SIGALRM, handler)
     signal.alarm(3)
     try:
-      path = astare(map,(0,0),(len(map)-1,len(map)-1))
+      path = astar(map,1)
     except IOError:
       path = None
 
     if path is None:
       print("NO PATH FOUND FOR A* EUCLIDEAN")
     else:
-      ##print(path)
+      $$print(path)
       print("a* euclidean path length: "+ str(len(path)))
     print("--- a* euclidean took %s seconds ---" % (time.time() - start_time)) 
     start_time = time.time()

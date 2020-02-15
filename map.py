@@ -25,7 +25,7 @@ def main():
     print("--- %s seconds ---" % (time.time() - start_time))
     if (result == None):
       print("NO DFS PATH FOUND")
-    visual(map, result, "DFS", count)
+    visual(map, result[0], "DFS", count)
    
 
   elif (search == "bfs"):
@@ -63,7 +63,7 @@ def main():
       #print(path)
     print("--- %s seconds ---" % (time.time() - start_time)) 
     result = path
-    visual(map, result, "A*", count)
+    visual(map, result[0], "A*", count)
     
   elif (search == "bi-bfs"):
     start_time = time.time()
@@ -137,7 +137,7 @@ def main():
     if (result1 == None):
       print("NO DFS PATH FOUND")
     else:
-      visual(map, result1, "DFS", count)
+      visual(map, result1[0], "DFS", count)
       count = count + 1
 
     if (result2 == None):
@@ -155,13 +155,13 @@ def main():
     if (result4 == None):
       print("NO A* EUCLIDEAN PATH FOUND")
     else:
-      visual(temp, result4, "A* EUCLIDEAN", count)
+      visual(temp, result4[0], "A* EUCLIDEAN", count)
       count = count + 1
 
     if (result5 == None):
       print("NO A* MANHATTAN PATH FOUND")
     else:
-      visual(temp, result5, "A* MANHATTAN", count)
+      visual(temp, result5[0], "A* MANHATTAN", count)
       count = count + 1
 
    
@@ -328,4 +328,7 @@ def compareHeuristics():
   print(timeList)
   print("Avg time: "+str(sum(timeList)/len(timeList)))
 
-#main()
+main()
+
+
+

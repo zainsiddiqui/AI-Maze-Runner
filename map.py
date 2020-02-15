@@ -117,14 +117,13 @@ def main():
     if path is None:
       print("NO PATH FOUND FOR A* EUCLIDEAN")
     else:
-      $$print(path)
+      #print(path)
       print("a* euclidean path length: "+ str(len(path)))
     print("--- a* euclidean took %s seconds ---" % (time.time() - start_time)) 
     start_time = time.time()
     path = bi_bfs(map)
     ##print(path)
     print("bi-bfs path length: "+ str(len(path)))
-<<<<<<< HEAD
   elif (search == "visuals"):
     temp = copy.deepcopy(map)
     temp[0][0]=0
@@ -170,10 +169,6 @@ def main():
 
 
   plt.show()
-=======
-    print("--- bi-bfs took %s seconds ---" % (time.time() - start_time))
-   
->>>>>>> fa56e81050cea9076f51d1023382074586101a92
     
 def mazeVisual(map):
   temp = copy.deepcopy(map)

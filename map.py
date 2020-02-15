@@ -21,7 +21,7 @@ def main():
   search = input("Choose search option: visuals, dfs, bfs, a*, bi-bfs, all \n")
   if (search == "dfs"):
     start_time = time.time()
-    result = dfs(map)
+    result = dfs(map)[0]
     print("--- %s seconds ---" % (time.time() - start_time))
     if (result == None):
       print("NO DFS PATH FOUND")
@@ -52,7 +52,7 @@ def main():
     signal.alarm(25)
     try:
       ##path = astar(map,int(flag))
-      path = astar(map,flag)
+      path = astar(map,flag)[0]
     except IOError:
       path = None
 
@@ -328,4 +328,4 @@ def compareHeuristics():
   print(timeList)
   print("Avg time: "+str(sum(timeList)/len(timeList)))
 
-main()
+#main()

@@ -83,7 +83,7 @@ def astar(map, h):
                 current = current.parent
             ##print(len(pqueue))
             # Return reversed path
-            return path[::-1] 
+            return [path[::-1], len(visited), map] 
 
         # List of children nodes
         children = []
@@ -134,39 +134,8 @@ def astar(map, h):
 
             # Add the child to the priority queue with priority f
             heapq.heappush(pqueue, (child.f, child))
+    return
             
-            
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 class Coordinates:
@@ -182,11 +151,13 @@ def pathList(path):
 
 
 def dfs(map):
+    maxFringeSize = 1
     visited = [[0 for x in range(len(map))] for y in range(len(map))]
     stack = []
     path = []
     stack.append(Coordinates(0, 0))
     while (len(stack) > 0):
+        maxFringeSize = max(maxFringeSize, len(stack))
         curr = stack.pop()
         row = curr.x
         column = curr.y
@@ -204,12 +175,8 @@ def dfs(map):
                 print(curr.x, curr.y)
             '''
             result = pathList(path)
-<<<<<<< HEAD
             #print(result)
-=======
-            ##print(result)
->>>>>>> fa56e81050cea9076f51d1023382074586101a92
-            return result
+            return [result, maxFringeSize, map]
         if (has_neighbors(row, column, map, visited) == False):
             temp = path
             for curr in list(reversed(temp)):
@@ -261,11 +228,7 @@ def bfs(map):
             #print("PATH FOUND FOR BFS: ")
             result = printBFS(path, children, map)
             result = pathList(result)
-<<<<<<< HEAD
             #print(result)
-=======
-            ##print(result)
->>>>>>> fa56e81050cea9076f51d1023382074586101a92
             return result
         else:
             visited[row][column] = 1
@@ -356,11 +319,7 @@ def bi_bfs(map):
                 visited[rowS][columnS] = "G"
                 #print("PATH FOUND FOR BI-BFS4: ")
                 result = printBFS(pathS, childrenS, map)
-<<<<<<< HEAD
                 #print(result)
-=======
-                ##print(result)
->>>>>>> fa56e81050cea9076f51d1023382074586101a92
                 return result
             elif (check_bi_bfs(currStart, queueG)):
                 node = check_bi_bfs2(currStart, queueG)
@@ -446,75 +405,3 @@ def bi_bfs(map):
                     childrenG[Coordinates(rowG + 1, columnG)] = currGoal 
     #print("NO PATH FOUND FOR BI-BFS")
     return
-
-
-
-
-
-'''
-def bidirectional_bfs(map):
-    visited = [[0 for x in range(len(map))] for y in range(len(map))]
-    queueS = []
-    queueG = []
-    path = []
-    
-    queueS.append(Coordinates(0, 0))
-    queueG.append(Coordinates(len(map) - 1, len(map) - 1))
-    
-
-    while (len(queueS) > 0 and len(queueG) > 0):
-        if (len(queueS) > 0):
-            currStart = queueS.pop(0)
-            path.append(currStart)
-            rowS = currStart.x
-            columnS = currStart.y
-            if (rowS < 0 or rowS >= len(map) or columnS < 0 or columnS >= len(map) or visited[rowS][columnS] == 1 or map[rowS][columnS] == 1):
-                continue   
-            elif (map[rowS][columnS] == "G" or check_bi_bfs(currStart, queueG)):
-                visited[rowS][columnS] = 1
-                print("PATH FOUND FOR BI-BFS: ")
-                for curr in path:
-                    print(curr.x, curr.y)
-                return
-            else:
-                visited[rowS][columnS] = 1
-                queueS.append(Coordinates(rowS, columnS - 1))
-                queueS.append(Coordinates(rowS, columnS + 1))
-                queueS.append(Coordinates(rowS - 1, columnS)) 
-                queueS.append(Coordinates(rowS + 1, columnS))
-        
-        if (len(queueG) > 0):
-            currGoal = queueG.pop(0)
-            path.append(currgoalNode)
-            rowG = currgoalNode.x
-            columnG = currgoalNode.y
-            if (rowG < 0 or rowG >= len(map) or columnG < 0 or columnG >= len(map) or visited[rowG][columnG] == 1 or map[rowG][columnG] == 1):
-                path.pop()
-            elif (map[rowG][columnG] == "S" or check_bi_bfs(currgoalNode, queueS)):
-                visited[rowG][columnG] = 1
-                print("PATH FOUND FOR BI-BFS: ")
-                for curr in path:
-                    print(curr.x, curr.y)
-                return
-            else:
-                visited[rowG][columnG] = 1
-                queueG.append(Coordinates(rowG, columnG - 1))
-                queueG.append(Coordinates(rowG, columnG + 1))
-                queueG.append(Coordinates(rowG - 1, columnG)) 
-                queueG.append(Coordinates(rowG + 1, columnG))
-    print("NO PATH FOUND FOR BI-BFS")
-    return
-
-
-map = [["S", 0, 0], [0,1,0], [0,1,"G"]]
-bi_bfs(map)
-bfs(map)
-dfs(map)]
-
-S 0 0
-0 1 0
-0 1 0
-'''
-
-
-

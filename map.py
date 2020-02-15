@@ -117,7 +117,7 @@ def main():
     if path is None:
       print("NO PATH FOUND FOR A* EUCLIDEAN")
     else:
-      #print(path)
+      ##print(path)
       print("a* euclidean path length: "+ str(len(path)))
     print("--- a* euclidean took %s seconds ---" % (time.time() - start_time)) 
     start_time = time.time()
@@ -165,7 +165,6 @@ def main():
       count = count + 1
 
    
-
 
 
   plt.show()

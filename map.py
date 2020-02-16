@@ -8,7 +8,6 @@ import signal
 import numpy as np
 import matplotlib.pyplot as plt
 import copy
-from astar import astar2
 
 def main(): 
   inputDim = input("Enter dimension of map: ")
@@ -52,7 +51,7 @@ def main():
     signal.alarm(25)
     try:
       ##path = astar(map,int(flag))
-      path = astar2(map)[0]
+      path = astar(map,flag)[0]
     except IOError:
       path = None
 

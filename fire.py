@@ -16,8 +16,9 @@ def main():
     firey = result[2]
     mazeVisual(map)
     current = (0, 0)
+    map[0][0] = 9
     originFire = Coordinates(firex, firey)
-    path = []
+    path = [(0,0)]
     while (True):
 
         score = 0
@@ -27,7 +28,7 @@ def main():
         for x in neighbors:
             result = calculateHeaurstic(map, x, originFire)
             if result[1] == True:
-                path.append((x,x))
+                path.append(x)
                 print(path) 
                 return
             if result[0] > score:

@@ -33,7 +33,7 @@ def main():
             if result[0] > score:
                 score = result[0]
                 current = x
-        #print(current)
+        print(current)
         (x,y) = current
         map[x][y]=9
         path.append(current)

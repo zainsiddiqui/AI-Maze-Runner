@@ -75,7 +75,7 @@ def main():
     visual(map, result, "BI-DIRECTIONAL BFS", count)
   elif (search == "all"):
     start_time = time.time()
-    path = dfs(map)
+    path = dfs(map)[0]
     ##print(path)
     print("dfs path length: "+ str(len(path)))
     print("--- dfs took %s seconds ---" % (time.time() - start_time)) 
@@ -89,10 +89,10 @@ def main():
     map[len(map)-1][len(map)-1] = 0
     start_time = time.time()
     time.time()
-    signal.signal(signal.SIGALRM, handler)
-    signal.alarm(3)
+    #signal.signal(signal.SIGALRM, handler)
+    #signal.alarm(3)
     try:
-      path = astar(map,0)
+      path = astar(map,0)[0]
     except IOError:
       path = None
 
@@ -107,10 +107,10 @@ def main():
     map[len(map)-1][len(map)-1] = 0
     start_time = time.time()
     time.time()
-    signal.signal(signal.SIGALRM, handler)
-    signal.alarm(3)
+    #signal.signal(signal.SIGALRM, handler)
+    #signal.alarm(3)
     try:
-      path = astar(map,1)
+      path = astar(map,1)[0]
     except IOError:
       path = None
 

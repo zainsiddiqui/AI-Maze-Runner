@@ -1,10 +1,11 @@
 from searches import dfs
 from searches import astar
-from searches import *
+# searches import *
 from map import generateMap, printMap
 from operator import itemgetter
 import numpy as np
 import matplotlib.pyplot as plt
+import copy
 
 # Genetic Algorithm
 
@@ -74,14 +75,19 @@ def genetic_algorithm(algo):
     count = 0
     population = []
     while count != 100:
+        #print(count)
         map = generateMap(dim, prob)
         if (algo == "dfs"):
             result = dfs(map)
         else:
-            map[0][0] = 0
-            map[len(map) - 1][len(map) - 1] = 0
-            result = astar(map,0)
-            print(result == None)
+            temp = copy.deepcopy(map)
+            temp[0][0]=0
+            #print("poop")
+            temp[len(temp)-1][len(temp)-1] = 0
+            result = astar(temp,0)
+            #print("poop")
+            #print(result)
+            #print(result == None)
 
             '''
             try:
@@ -92,13 +98,14 @@ def genetic_algorithm(algo):
         if (result == None):
             continue
         else:
-            population.append(result)
             result.append(map)
+            population.append(result)
             count = count + 1
 
     count = 0
 
     while count != 50:
+        #print("HERE")
         population = sorted(population, key = itemgetter(1), reverse = True)
         dad = population[0]
         mom = population[1]
@@ -121,12 +128,11 @@ def genetic_algorithm(algo):
         if algo == "dfs":
             final = dfs(kid)
         else:
-            try:
-                final[0][0] = 0
-                final[len(final) - 1][len(final) - 1] = 0
-                final = astar(kid, 0)
-            except IOError:
-                final = None
+    
+            final[0][0] = 0
+            final[len(final) - 1][len(final) - 1] = 0
+            final = astar(kid, 0)[0]
+            print(final == None, "@")
 
         if (final == None):
             population.pop(0)

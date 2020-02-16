@@ -134,7 +134,7 @@ def astar(map, h):
 
             # Add the child to the priority queue with priority f
             heapq.heappush(pqueue, (child.f, child))
-    return
+    return None
             
 
 

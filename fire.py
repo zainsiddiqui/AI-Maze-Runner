@@ -19,7 +19,8 @@ def main():
     map[0][0] = 9
     originFire = Coordinates(firex, firey)
     path = [(0,0)]
-    while (True):
+    end = True
+    while (end == True):
 
         score = 0
         map = updateFire(map, q)
@@ -31,20 +32,42 @@ def main():
             if result[1] == True:
                 map[x[0]][x[1]] = 9
                 path.append(x)
-                print(path)
-                printMap(map) 
-                return
+                #print(path)
+                #printMap(map) 
+                end = False
             if result[0] > score:
                 score = result[0]
                 current = x
                 #print(current)
-
-        print(current)
+        if (end == False):
+            break
+        #print(current)
         (x,y) = current
         map[x][y]=9
         path.append(current)
         
-            
+    temp = copy.deepcopy(map)
+
+    for x in range(len(map)):
+        for y in range(len(map)):
+            if temp[x][y] == 0:
+                temp[x][y] = 4
+            elif temp[x][y] == 1:
+                temp[x][y] = 0
+            else:
+                temp[x][y] = 2
+    #print(path)
+    for (x, y) in path:
+        temp[x][y] = 3
+    #print("HERE")
+    M = np.array(temp)
+    plt.figure(2)
+    plt.imshow(M, cmap=plt.hot())
+    plt.plot()
+    plt.title("FIRE MAZE SOLUTION")
+    plt.xlabel('Column')
+    plt.ylabel('Row')
+
     plt.show()
 
 def get_neighbors(map,current):
@@ -91,8 +114,6 @@ def updateFire(map, q):
 
             
 
-
-
 def generateFireMaze(dim, p):
     map = [[0 for x in range(dim)] for y in range(dim)]
     v = [0,1]
@@ -107,7 +128,8 @@ def generateFireMaze(dim, p):
         x = r.randrange(0, dim - 1)
         y = r.randrange(0, dim - 1)
     map[x][y] = 2
-
+    map[0][0] = 0
+    map[len(map) - 1][len(map) - 1] = 0
     return [map, x, y]
 
 def mazeVisual(map):

@@ -88,8 +88,8 @@ def main():
     map[len(map)-1][len(map)-1] = 0
     start_time = time.time()
     time.time()
-    #signal.signal(signal.SIGALRM, handler)
-    #signal.alarm(3)
+    signal.signal(signal.SIGALRM, handler)
+    signal.alarm(3)
     try:
       path = astar(map,0)[0]
     except IOError:
@@ -257,8 +257,7 @@ def calculateSolvability():
 def handler(signum, frame):
     raise IOError("Timeout")
  
-def slow_function():
-    time.sleep(30)
+
  
 # Calculates average shortest path length
 def calculateAvgPathLength():

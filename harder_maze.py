@@ -6,6 +6,8 @@ from operator import itemgetter
 import numpy as np
 import matplotlib.pyplot as plt
 import copy
+import signal
+import time
 
 # Genetic Algorithm
 
@@ -13,6 +15,10 @@ import copy
 
 # A* Manhattan With Max Nodes Expanded
 
+
+def handler(signum, frame):
+    raise IOError("Timeout")
+ 
 
 def main():
 
@@ -70,8 +76,8 @@ def main():
 
 
 def genetic_algorithm(algo):
-    dim = 10
-    prob = .2
+    dim = 15
+    prob = .4
     count = 0
     population = []
     while count != 100:
@@ -82,19 +88,38 @@ def genetic_algorithm(algo):
             temp = copy.deepcopy(map)
             temp[0][0]=0
             temp[len(temp)-1][len(temp)-1] = 0
-            result = astar(temp,0)
+            start_time = time.time()
+            signal.signal(signal.SIGALRM, handler)
+            signal.alarm(1)
+            try:
+                result = astar(temp,0)
+            except IOError:
+                result = None
+
+            #print("poop")
+            #print(result)
+            #print(result == None)
+
+            '''
+            try:
+                result = astar(map,0)[0]
+            except IOError:
+                result = None
+            '''
         if (result == None):
             continue
         else:
             result.append(map)
             population.append(result)
             count = count + 1
+            print("Population count "+ str(count))
 
     count = 0
 
     while count != 50:
         population = sorted(population, key = itemgetter(1), reverse = True)
         dad = population[0]
+        print("dad:",dad[1])
         mom = population[1]
         kid = [[0 for x in range(dim)] for y in range(dim)]
 
@@ -112,10 +137,19 @@ def genetic_algorithm(algo):
         if algo == "dfs":
             final = dfs(kid)
         else:
-    
-            final[0][0] = 0
-            final[len(final) - 1][len(final) - 1] = 0
-            final = astar(kid, 0)[0]
+            kid[0][0] = 0
+            kid[len(kid) - 1][len(kid) - 1] = 0
+            start_time = time.time()
+            signal.signal(signal.SIGALRM, handler)
+            signal.alarm(1)
+            try:
+                final = astar(kid,0)
+            except IOError:
+                final = None
+            
+            
+            
+            
             print(final == None, "@")
 
         if (final == None):
@@ -127,6 +161,5 @@ def genetic_algorithm(algo):
     return population[0]
 
 main()
-
 
 

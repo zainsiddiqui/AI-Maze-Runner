@@ -22,7 +22,7 @@ def main():
     while (True):
 
         score = 0
-        updateFire(map, q)
+        map = updateFire(map, q)
         neighbors = get_neighbors(map,current)
 
         for x in neighbors:
@@ -30,7 +30,8 @@ def main():
             
             if result[1] == True:
                 path.append(x)
-                print(path) 
+                print(path)
+                printMap(map) 
                 return
             if result[0] > score:
                 score = result[0]
@@ -43,7 +44,6 @@ def main():
         path.append(current)
         
             
-
     plt.show()
 
 def get_neighbors(map,current):
@@ -141,4 +141,3 @@ def calculateHeaurstic(map, currentCell, origin_fire):
         return [score, False]
 
 main()
-

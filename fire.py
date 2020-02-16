@@ -7,11 +7,12 @@ from map import printMap
 
 def main():
     inputDim = input("Enter dimension for FIRE map: ")
-    inputP = input("Enter probability for FIRE map 0<=p<=1: ")
+    inputP = input("Enter density for FIRE map 0<=p<=1: ")
     inputQ = input("Enter flammabilty for FIRE map 0<=y<=1: ")
     q = float(inputQ)
     result = generateFireMaze(int(inputDim),float(inputP))
     map = result[0]
+    mazeStart = result[0]
     firex = result[1]
     firey = result[2]
     mazeVisual(map)
@@ -39,13 +40,17 @@ def main():
                 current = x
                 #print(current)
 
-        print(current)
+        #print(current)
         (x,y) = current
         map[x][y]=9
         path.append(current)
+        printMap(mazeStart)
+        printMap(map)
+    
+    plt.show()
         
             
-    plt.show()
+   
 
 def get_neighbors(map,current):
 

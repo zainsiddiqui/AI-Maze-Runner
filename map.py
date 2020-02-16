@@ -8,7 +8,7 @@ import signal
 import numpy as np
 import matplotlib.pyplot as plt
 import copy
-
+from astar import astar2
 
 def main(): 
   inputDim = input("Enter dimension of map: ")
@@ -52,7 +52,7 @@ def main():
     signal.alarm(25)
     try:
       ##path = astar(map,int(flag))
-      path = astar(map,flag)[0]
+      path = astar2(map)[0]
     except IOError:
       path = None
 
@@ -63,7 +63,7 @@ def main():
       #print(path)
     print("--- %s seconds ---" % (time.time() - start_time)) 
     result = path
-    visual(map, result[0], "A*", count)
+    visual(map, result, "A*", count)
     
   elif (search == "bi-bfs"):
     start_time = time.time()
@@ -92,7 +92,7 @@ def main():
     signal.signal(signal.SIGALRM, handler)
     signal.alarm(3)
     try:
-      path = astar(map,0)
+      path = astar(map,0)[0]
     except IOError:
       path = None
 

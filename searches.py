@@ -21,8 +21,7 @@ class coordNode():
     # Hash method for visited set
     def __hash__(self):              
         return hash(self.position)
-        
-       
+
 def calculateEuclidean(current,goal):
     # Not incorporating sqrt function as computationally expensive
     return ((current.position[0] - goal.position[0]) ** 2) + ((current.position[1] - goal.position[1]) ** 2)
@@ -30,7 +29,9 @@ def calculateEuclidean(current,goal):
 def calculateManhattan(current,goal):
     return (abs(current.position[0] - goal.position[0]) + abs(current.position[1] - goal.position[1]))
 
-def astar(map, h):
+
+def astar(map,h):
+    h = int(h)
     # Create and initialize start node
     start = (0,0)
     dim = len(map)-1
@@ -50,7 +51,7 @@ def astar(map, h):
     # Initialize both priority queue and visited list of coord nodes
     pqueue = []
     # Initialiaing to set as makes algorithm more efficient
-    visited = set()
+    visited = []
 
 
     # Add the start node to priority queue with priority f
@@ -62,6 +63,7 @@ def astar(map, h):
         (v,current_coordNode) = heapq.heappop(pqueue)
         # Pushing item back into priority queue
         heapq.heappush(pqueue,(v,current_coordNode))
+        
         current_index = 0
 
         for index, (_,item) in enumerate(pqueue):
@@ -72,7 +74,7 @@ def astar(map, h):
       
         # Pop current off open list, add to closed list
         pqueue.pop(current_index)
-        visited.add(current_coordNode)
+        visited.append(current_coordNode)
 
         # Found the goalNode
         if current_coordNode.position == goalNode.position:
@@ -83,7 +85,7 @@ def astar(map, h):
                 current = current.parent
             ##print(len(pqueue))
             # Return reversed path
-            return [path[::-1], len(visited), map] 
+            return [path[::-1], len(visited), map]
 
         # List of children nodes
         children = []
@@ -134,8 +136,6 @@ def astar(map, h):
 
             # Add the child to the priority queue with priority f
             heapq.heappush(pqueue, (child.f, child))
-    return
-            
 
 
 class Coordinates:

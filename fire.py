@@ -29,6 +29,7 @@ def main():
             result = calculateHeaurstic(map, x, originFire)
             
             if result[1] == True:
+                map[x[0]][x[1]] = 9
                 path.append(x)
                 print(path)
                 printMap(map) 

@@ -9,7 +9,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import copy
 
-
 def main(): 
   inputDim = input("Enter dimension of map: ")
   inputP = input("Enter probability 0<p<1: ")
@@ -63,7 +62,7 @@ def main():
       #print(path)
     print("--- %s seconds ---" % (time.time() - start_time)) 
     result = path
-    visual(map, result[0], "A*", count)
+    visual(map, result, "A*", count)
     
   elif (search == "bi-bfs"):
     start_time = time.time()

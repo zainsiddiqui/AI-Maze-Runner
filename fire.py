@@ -2,6 +2,7 @@ import random as r
 import numpy as np
 import matplotlib.pyplot as plt
 import copy
+from map import printMap
 
 def main():
     inputDim = input("Enter dimension for FIRE map: ")
@@ -30,7 +31,13 @@ def updateFire(map, q):
         for y in range(len(temp)):
             k = num_burning_neighbors(temp, x, y)
             if (temp[x][y] == 0 and k > 0):
-                
+                prob = 1 - ((1 - q) ** k)
+                v = [2, 0]
+                weights = [prob, 1 - prob]
+                value = r.choices(v, weights)
+                temp[x][y] = value[0]
+    
+    return map
 
             
 

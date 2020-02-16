@@ -327,7 +327,7 @@ def compareHeuristics():
   print(timeList)
   print("Avg time: "+str(sum(timeList)/len(timeList)))
 
-main()
+#main()
 
 
 

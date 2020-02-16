@@ -75,26 +75,14 @@ def genetic_algorithm(algo):
     count = 0
     population = []
     while count != 100:
-        #print(count)
         map = generateMap(dim, prob)
         if (algo == "dfs"):
             result = dfs(map)
         else:
             temp = copy.deepcopy(map)
             temp[0][0]=0
-            #print("poop")
             temp[len(temp)-1][len(temp)-1] = 0
             result = astar(temp,0)
-            #print("poop")
-            #print(result)
-            #print(result == None)
-
-            '''
-            try:
-                result = astar(map,0)[0]
-            except IOError:
-                result = None
-            '''
         if (result == None):
             continue
         else:
@@ -105,7 +93,6 @@ def genetic_algorithm(algo):
     count = 0
 
     while count != 50:
-        #print("HERE")
         population = sorted(population, key = itemgetter(1), reverse = True)
         dad = population[0]
         mom = population[1]
@@ -122,9 +109,6 @@ def genetic_algorithm(algo):
                 else:
                     kid[x][y] = map2[x][y]
                 go = go + 1
-        #printMap(map1)
-        #printMap(map2)
-        #printMap(kid)
         if algo == "dfs":
             final = dfs(kid)
         else:

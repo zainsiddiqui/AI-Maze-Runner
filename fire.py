@@ -21,7 +21,7 @@ def main():
     originFire = Coordinates(firex, firey)
     path = [(0,0)]
     while (True):
-
+  
         score = 0
         map = updateFire(map, q)
         neighbors = get_neighbors(map,current)

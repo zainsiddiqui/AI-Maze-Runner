@@ -1,6 +1,5 @@
 from searches import dfs
 from searches import astar
-# searches import *
 from map import generateMap, printMap
 from operator import itemgetter
 import numpy as np

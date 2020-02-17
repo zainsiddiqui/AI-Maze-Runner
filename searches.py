@@ -1,5 +1,7 @@
 import heapq
 import math
+
+# Coordnode class
 class coordNode():
     def __init__(self, parent=None, position=None):
         self.parent = parent
@@ -12,6 +14,7 @@ class coordNode():
     def __lt__(self, a):
         return self.f < a.f
 
+    # Comparing nodes
     def __eq__(self, a):
         if (self.position == a.position):
             return True

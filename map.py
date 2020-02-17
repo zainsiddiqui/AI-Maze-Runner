@@ -233,24 +233,23 @@ def generateMap(dim,p):
 # Calculates solvability
 def calculateSolvability():
  
-  i = 10
+  i = 1
   i2 = i
   solvable = 0
   unsolvable = 0
   while (i > 0):
     map = None
-    map = generateMap(int(10),0)
-    printMap(map)
+    map = generateMap(int(500),0.3)
+    #printMap(map)
     map[0][0] = 0
-    map[9][9] = 0
-    path = astar(map,int(1))
-    print(path)
+    #map[9][9] = 0
+    path = bfs(map)
+    print(i,path)
     if path is None:
      unsolvable = unsolvable + 1
     else:
       solvable = solvable + 1
     i=i-1
-
   print("Generated: "+ str(i2) +" and # Solvable: " + str(solvable))
   print("Success Percent: "+ str((solvable/i2)*100))
 
@@ -327,6 +326,6 @@ def compareHeuristics():
   print("Avg time: "+str(sum(timeList)/len(timeList)))
 
 #main()
-
+#calculateSolvability()
 
 

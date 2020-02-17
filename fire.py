@@ -10,32 +10,42 @@ def main():
     inputP = input("Enter density for FIRE map 0<=p<=1: ")
     inputQ = input("Enter flammabilty for FIRE map 0<=y<=1: ")
     q = float(inputQ)
+    # Generating Fire Mze given dimensions and density
     result = generateFireMaze(int(inputDim),float(inputP))
     map = result[0]
     mazeStart = result[0]
+    # Extracting origin of fire
     firex = result[1]
     firey = result[2]
     mazeVisual(map)
     current = (0, 0)
     map[0][0] = 9
+    # Making origin of fire a coordinate
     originFire = Coordinates(firex, firey)
+    # Initalizing path with start
     path = [(0,0)]
     end = True
     while (end == True):
   
         score = 0
+        # Fire potentially spreading to a new cell
         map = updateFire(map, q)
+        # Getting all neighbors of current cell
         neighbors = get_neighbors(map,current)
 
+        # For every neighbor 
         for x in neighbors:
+            # Calculate heaurstic of neghbor cell
             result = calculateHeaurstic(map, x, originFire)
             
+            # If true, then we have found the goal cell
             if result[1] == True:
                 map[x[0]][x[1]] = 9
                 path.append(x)
                 #print(path)
                 #printMap(map) 
                 end = False
+            # If current cells's heuristic is greater, make new score and current cell
             if result[0] > score:
                 score = result[0]
                 current = x
@@ -46,7 +56,10 @@ def main():
             break
 
         (x,y) = current
+        # Mark as visited cell
         map[x][y]=9
+        
+        # 
         path.append(current)
         #printMap(mazeStart)
         #printMap(map)

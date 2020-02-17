@@ -13,9 +13,9 @@ def main():
   inputDim = input("Enter dimension of map: ")
   inputP = input("Enter probability 0<p<1: ")
   map=generateMap(int(inputDim),float(inputP))
-  #printMap(map)
+
   mazeVisual(map)
-  #printMap(map)
+
   count = 2
   search = input("Choose search option: visuals, dfs, bfs, a*, bi-bfs, all \n")
   if (search == "dfs"):
@@ -50,7 +50,6 @@ def main():
     signal.signal(signal.SIGALRM, handler)
     signal.alarm(25)
     try:
-      ##path = astar(map,int(flag))
       path = astar(map,flag)[0]
     except IOError:
       path = None
@@ -59,7 +58,7 @@ def main():
       print("A* path does not exist")
       return
     #else:
-      #print(path)
+
     print("--- %s seconds ---" % (time.time() - start_time)) 
     result = path
     visual(map, result, "A*", count)
@@ -70,19 +69,20 @@ def main():
     print("--- %s seconds ---" % (time.time() - start_time))
     if (result == None):
       print("NO BI-BFS PATH FOUND")
-      #return
+
     visual(map, result, "BI-DIRECTIONAL BFS", count)
   elif (search == "all"):
     start_time = time.time()
     path = dfs(map)[0]
-    ##print(path)
+
     print("dfs path length: "+ str(len(path)))
     print("--- dfs took %s seconds ---" % (time.time() - start_time)) 
     start_time = time.time()
     path = bfs(map)
-    ##print(path)
+
     print("bfs path length: "+ str(len(path)))
     print("--- bfs took %s seconds ---" % (time.time() - start_time)) 
+
     # Setting up map
     map[0][0]=0
     map[len(map)-1][len(map)-1] = 0
@@ -98,7 +98,7 @@ def main():
     if path is None:
       print("NO PATH FOUND FOR A* MANHATTAN")
     else:
-      ##print(path)
+
       print("a* manhatttan path length: "+ str(len(path)))
     print("--- a* manhatttan took %s seconds ---" % (time.time() - start_time)) 
     # Setting up map
@@ -116,12 +116,12 @@ def main():
     if path is None:
       print("NO PATH FOUND FOR A* EUCLIDEAN")
     else:
-      ##print(path)
+
       print("a* euclidean path length: "+ str(len(path)))
     print("--- a* euclidean took %s seconds ---" % (time.time() - start_time)) 
     start_time = time.time()
     path = bi_bfs(map)
-    ##print(path)
+
     print("bi-bfs path length: "+ str(len(path)))
   elif (search == "visuals"):
     temp = copy.deepcopy(map)
@@ -167,7 +167,8 @@ def main():
 
 
   plt.show()
-    
+
+# Creates a visualization given a map
 def mazeVisual(map):
   temp = copy.deepcopy(map)
   for x in range(len(map)):
@@ -186,6 +187,7 @@ def mazeVisual(map):
   plt.xlabel('Column (MAZE)')
   plt.ylabel('Row (MAZE)')
 
+# Sets up the map in order to be displayed visually
 def visual(map, result, strr, count):
 
   temp = copy.deepcopy(map)
@@ -213,11 +215,13 @@ def visual(map, result, strr, count):
     for y in range(len(map)):
   '''
 
+# Prints the map
 def printMap(a):
   print("map:")
   print('\n'.join(['\t'.join([str(cell) for cell in row]) for row in a]))
   print()
 
+# Generates a map given dim and p
 def generateMap(dim,p):
   map = [[0 for x in range(dim)] for y in range(dim)]
   v = [0,1]
@@ -230,7 +234,7 @@ def generateMap(dim,p):
   map[dim-1][dim-1] = "G"
   return map
 
-# Calculates solvability
+# Calculates solvability 
 def calculateSolvability():
  
   i = 1
@@ -295,6 +299,7 @@ def calculateAvgPathLength():
   print(pathLen)
   print("Avg Path Length: "+ str(sum(pathLen)/len(pathLen)))
 
+# Compares Euclidean and Manhattan heuristics
 def compareHeuristics():
   timeList = []
   while (len(timeList) < 10):
@@ -326,6 +331,6 @@ def compareHeuristics():
   print("Avg time: "+str(sum(timeList)/len(timeList)))
 
 #main()
-#calculateSolvability()
+
 
 

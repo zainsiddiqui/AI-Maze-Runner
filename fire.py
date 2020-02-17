@@ -17,6 +17,7 @@ def main():
     # Extracting origin of fire
     firex = result[1]
     firey = result[2]
+    # Visualizing map
     mazeVisual(map)
     current = (0, 0)
     map[0][0] = 9
@@ -47,6 +48,7 @@ def main():
                 end = False
             # If current cells's heuristic is greater, make new score and current cell
             if result[0] > score:
+                # Making new score equal to heauristic of current cell
                 score = result[0]
                 current = x
                 #print(current)
@@ -58,8 +60,8 @@ def main():
         (x,y) = current
         # Mark as visited cell
         map[x][y]=9
-        
-        # 
+
+        # Add cell to path
         path.append(current)
         #printMap(mazeStart)
         #printMap(map)
@@ -89,7 +91,7 @@ def main():
         
             
    
-
+# Getting neighbors of a cell
 def get_neighbors(map,current):
 
     (row,column) = current
@@ -106,7 +108,7 @@ def get_neighbors(map,current):
     return neighbors
     
   
-
+# Counting the number of burning neighbors
 def num_burning_neighbors(temp, x, y):
     count = 0
     if (x + 1 >= 0 and x + 1 < len(temp) and y >= 0 and y < len(temp) and temp[x + 1][y] == 2):
@@ -119,6 +121,7 @@ def num_burning_neighbors(temp, x, y):
         count = count + 1
     return count
 
+# Adding a fire cell based on q
 def updateFire(map, q):
     temp = copy.deepcopy(map)
     for x in range(len(temp)):
@@ -135,7 +138,7 @@ def updateFire(map, q):
             
 
 
-
+# Generating fire maze with dimension and density
 def generateFireMaze(dim, p):
     map = [[0 for x in range(dim)] for y in range(dim)]
     v = [0,1]
@@ -152,6 +155,7 @@ def generateFireMaze(dim, p):
     map[x][y] = 2
     map[0][0] = 0
     map[len(map) - 1][len(map) - 1] = 0
+    # returning a list incliuding the new map, and x and y points of the origin
     return [map, x, y]
 
 def mazeVisual(map):
@@ -176,7 +180,7 @@ def mazeVisual(map):
     plt.xlabel('Column (MAZE)')
     plt.ylabel('Row (MAZE)')
     
-## Calculates manhattan distance from current coordinate to origin coordinate
+# Calculates manhattan distance from current coordinate to origin coordinate
 def calculateHeaurstic(map, currentCell, origin_fire):
     (x,y) = currentCell
     if (x == len(map)-1 and y == len(map)-1):

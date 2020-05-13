@@ -6,6 +6,8 @@ planning, and more abstractly in the construction and design of complex objects.
 <img align="center" img width="370" alt="Screen Shot 2020-05-13 at 7 43 24 PM" src="https://user-images.githubusercontent.com/39894720/81877068-29d67980-9552-11ea-82ad-5e68f3c99e10.png">
 </p>
 
+Project uses Python programming language
+
 The algorithms implemented:
 
 • **Depth-First Search**

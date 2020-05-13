@@ -1,1 +1,1 @@
-# Maze-Runner-AI
+# AI-Maze-Runner

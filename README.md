@@ -1,6 +1,6 @@
 # AI-Maze-Runner
 This program explores various Artificial Intelligence pathfinding algorithms, both in the traditional application of path
-planning, and more abstractly in the construction and design of complex objects. The program generates a maze of a given density and runs an pathfinding algorithm on the maze.
+planning, and more abstractly in the construction and design of complex objects. The program generates a maze of a given density and runs an pathfinding algorithm on the maze. To see full detailed analysis, please view **Report.pdf** 
 
 
 <img align="center" img width="370" alt="Screen Shot 2020-05-13 at 7 43 24 PM" src="https://user-images.githubusercontent.com/39894720/81877068-29d67980-9552-11ea-82ad-5e68f3c99e10.png">
